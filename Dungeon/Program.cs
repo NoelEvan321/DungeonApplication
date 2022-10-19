@@ -1,4 +1,6 @@
-﻿namespace Dungeon 
+﻿using DungeonLibrary;
+
+namespace Dungeon 
 {
     class Program
     {
@@ -20,9 +22,10 @@
             int score = 0;
 
             //TODO Weapon Object Creation
+            Weapon sword = new Weapon(8, "Long Sword", 10, WeaponType.Sword, false, 1);
 
             //TODO Player Object Creation
-
+            Character test = new Character("Testy", 30,10,100);
 
             //TODO Create the main game loop
 
