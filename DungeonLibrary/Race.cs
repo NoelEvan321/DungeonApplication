@@ -16,7 +16,7 @@ namespace DungeonLibrary
         Human,
         Orc,
         Elf,
-        Dark-Elf,
+        DarkElf,
         Dwarf,
         Halfling,
         Gnome,

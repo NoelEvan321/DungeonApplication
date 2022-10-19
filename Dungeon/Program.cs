@@ -37,6 +37,7 @@ namespace Dungeon
             do
             {
                 //TODO Generate a random room the player will enter
+                Console.WriteLine(GetRoom());
 
                 //TODO Select a random monster to inhabit the room
 
@@ -84,6 +85,7 @@ namespace Dungeon
                             //TODO Run Away - Attack of Opportunity
 
                             Console.WriteLine("Run Away");
+                            reload = true;
 
                             break;
 
@@ -106,6 +108,7 @@ namespace Dungeon
 
                         case ConsoleKey.X:
                         case ConsoleKey.E:
+                        case ConsoleKey.Escape:
 
                             //Exit
 
