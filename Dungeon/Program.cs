@@ -1,6 +1,6 @@
 ﻿using DungeonLibrary;
 
-namespace Dungeon 
+namespace Dungeon
 {
     class Program
     {
@@ -22,10 +22,11 @@ namespace Dungeon
             int score = 0;
 
             //TODO Weapon Object Creation
-            Weapon sword = new Weapon(8, "Long Sword", 10, WeaponType.Sword, false, 1);
-
+            Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1);
+            //Console.WriteLine(sword);//test the ToString()
             //TODO Player Object Creation
-            Character test = new Character("Testy", 30,10,100);
+            //Character test = new Character("Testy McTesterson",30,10,1000);
+            //Console.WriteLine(test);
 
             //TODO Create the main game loop
 
@@ -37,6 +38,7 @@ namespace Dungeon
             do
             {
                 //TODO Generate a random room the player will enter
+                //Console.WriteLine(GetRoom());
                 Console.WriteLine(GetRoom());
 
                 //TODO Select a random monster to inhabit the room
@@ -86,7 +88,6 @@ namespace Dungeon
 
                             Console.WriteLine("Run Away");
                             reload = true;
-
                             break;
 
                         case ConsoleKey.P:
@@ -109,7 +110,6 @@ namespace Dungeon
                         case ConsoleKey.X:
                         case ConsoleKey.E:
                         case ConsoleKey.Escape:
-
                             //Exit
 
                             Console.WriteLine("Nobody likes a quitter...");
@@ -160,25 +160,25 @@ namespace Dungeon
             //Added this line to preserve the Console.Title
             Console.ReadKey();
 
-        }// end Main()
+        }//end Main()
+
         private static string GetRoom()
         {
-            //code
             string[] rooms = /*new string[5]*/
             {
-                "The room is dark and musty with the smell of lost souls.",
-                "You enter a pretty pink powder room and instantly get glitter on you.",
-                "You arrive in a room filled with chairs and a ticket stub machine...DMV",
-                "You enter a quiet library... silence... nothing but silence....",
-                "As you enter the room, you realize you are standing on a platform surrounded by sharks",
-                "Oh my.... what is that smell? You appear to be standing in a compost pile",
-                "You enter a dark room and all you can hear is hair band music blaring.... This is going to be bad!",
-                "Oh no.... the worst of them all... Oprah's bedroom....",
-                "The room looks just like the room you are sitting in right now... or does it?",
+                    "The room is dark and musty with the smell of lost souls.",
+                    "You enter a pretty pink powder room and instantly get glitter on you.",
+                    "You arrive in a room filled with chairs and a ticket stub machine...DMV",
+                    "You enter a quiet library... silence... nothing but silence....",
+                    "As you enter the room, you realize you are standing on a platform surrounded by sharks",
+                    "Oh my.... what is that smell? You appear to be standing in a compost pile",
+                    "You enter a dark room and all you can hear is hair band music blaring.... This is going to be bad!",
+                    "Oh no.... the worst of them all... Oprah's bedroom....",
+                    "The room looks just like the room you are sitting in right now... or does it?"
             };
 
             return rooms[new Random().Next(rooms.Length)];
-        }//end GetRoom()
+        }
     }//end Class
 }//end namespace
 

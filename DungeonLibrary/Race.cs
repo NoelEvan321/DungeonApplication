@@ -8,21 +8,20 @@ namespace DungeonLibrary
 {
     public enum Race
     {
-        //potential Expansion:
-        //Present a list of races to the user so they can choose one.
-        //ALternatively, assign a race randomly when the user starts the game.
-        Khajit,
-        Teifling,
+        //Potential Expansion:
+        //Present a list of races to the user so they can chose one.
+        //Alternatively, assign a race randomly when the user starts the game.
         Human,
         Orc,
         Elf,
-        DarkElf,
         Dwarf,
-        Halfling,
-        Gnome,
+        Khajit,
         Dragonborn,
-        //use the previous enums as a reference and insert this at the beginning of the game at select character loop.
-
-
+        Tiefling,
+        Gnome,
+        Halfling,
+        Alien,
+        Aasimar,
+        Drow
     }
 }
