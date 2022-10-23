@@ -12,6 +12,7 @@
         private int _hitChance;
         private int _block;
         private int _maxLife;
+        private int _initiative;
         //Properties // People
 
         public string Name
@@ -51,6 +52,11 @@
                 //_life = value <= MaxLife ? value : MaxLife;
             }//end set
         }//end Life prop
+        public int Initiative
+        {
+            get { return _initiative; }
+            set { _initiative = value; }
+        }
 
         //Constructors // Collect
         public Character(string name, int hitChance, int block, int maxLife)
@@ -60,6 +66,7 @@
             Block = block;
             MaxLife = maxLife;
             Life = maxLife;//Default Life to be the same as MaxLife
+            _initiative = 20;
         }
 
         public Character()
@@ -72,8 +79,8 @@
         {
             return $"----- {Name} -----\n" +
                 $"Life: {Life} of {MaxLife}\n" +
-                $"Hit Chance: {HitChance}%\n" +
-                $"Block: {Block}";
+                $"Hit Chance: {CalcHitChance()}%\n" +
+                $"Block: {Block}" + $"Initiative: {Initiative}";
         }
 
         public virtual int CalcBlock() { return Block; }

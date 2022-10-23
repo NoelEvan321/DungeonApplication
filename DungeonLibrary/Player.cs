@@ -14,20 +14,48 @@ namespace DungeonLibrary
         //Properties // People
         //Race CharacterRace
         //EquippedWeapon Weapon
+        public Race CharacterRace { get; set; }
+        public Weapon EquippedWeapon { get; set; }
 
         //Constructors // Collect
-        public Player(string name, int hitChance, int block, int maxLife) : base(name, hitChance, block, maxLife)
+        public Player(string name, int hitChance, int block, int maxLife, Race characterRace, Weapon equippedWeapon) : base(name, hitChance, block, maxLife)
         {
             //handle unique assignment
+            CharacterRace = characterRace;
+            EquippedWeapon = equippedWeapon;
 
-            //potential expansion, not required
-            //switch (CharacterRace)
-            //{
-            //    case Race.Elf:
-            //        HitChance += 5;
-            //        MaxHealth -= 5;
-            //        break;
-            //}
+            switch (CharacterRace)
+            {
+                case Race.Human:
+                    HitChance -= 5;
+                    MaxLife += 5;
+                    Block += 10;
+                    break;
+                case Race.Elf:
+                    HitChance += 5;
+                    MaxLife += 5;
+                    Block -= 5;
+                    break;
+                case Race.Gnome:
+                    MaxLife += 15;
+                    Block -= 15;
+                    break;
+                case Race.Orc:
+                    HitChance -= 5;
+                    MaxLife -= 10;
+                    Block += 20;
+                    break;
+                case Race.Kahjiit:
+                    HitChance += 20;
+                    MaxLife += 10;
+                    Block -= 20;
+                    break;
+                case Race.Hobitses:
+                    HitChance -= 5;
+                    MaxLife += 20;
+                    Block += 5;
+                    break;
+            }//end switch
         }
         public Player()
         {
@@ -37,23 +65,39 @@ namespace DungeonLibrary
         //Methods // Monkeys
         public override int CalcDamage()
         {
-            //return a random value between the Weapon's min and max damage
-            return 0;
+            return new Random().Next(EquippedWeapon.MinDamage,EquippedWeapon.MaxDamage + 1);
         }
         public override int CalcHitChance()
         {
-            return 0;
-            //HitChance + Weapon BonusHitChance
+            return HitChance + EquippedWeapon.BonusHitChance;
         }
         public override string ToString()
         {
-            //holding variable for the description
-            //Switch on CharacterRace
-            //case CharacterRace.Elf: 
-            //  description = "Describe an Elf"
-            //  break;
-            return base.ToString();//+some unique description based on the player race.
-            //hint, use a switch
+            string description = CharacterRace.ToString().Replace('_',' ');
+            switch (CharacterRace)
+            {
+                case Race.Elf:
+                    description = "Elves have pointy ears!";
+                    break;
+                case Race.Gnome:
+                    description = "Gnomes enjoy long walks in the garden!";
+                    break;
+                case Race.Orc:
+                    description = "*grunt*";
+                    break;
+                case Race.Kahjiit:
+                    description = "Khajiit has wares.";
+                    break;
+                case Race.Hobitses:
+                    description = "Potatoes and journeys";
+                    break;
+                case Race.Human:
+                    description = "Are you Human? Or are you dancer?";
+                    break;
+            }
+                    
+            return base.ToString() + $"\nWeapon:\n{EquippedWeapon}\nBlock: {Block}\n" +
+                $"Description: {description}";
         }
     }
 }

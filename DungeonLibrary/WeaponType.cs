@@ -11,8 +11,8 @@ namespace DungeonLibrary
         //We want the player's weapon type to be one of a preset list of options.
         Sword,
         Knife,
+        Blunt,
         Projectile,
-        Magical,
-        Elemental
+        Elemental,
     }
 }

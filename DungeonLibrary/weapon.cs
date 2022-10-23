@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    //make it public!
     public class Weapon
     {
-        //Full Qualified CTOR
-
-        //Nicely Formatted ToString()
-
-
         //Fields // Funny
         private int _minDamage;
         private int _maxDamage;
@@ -64,17 +58,6 @@ namespace DungeonLibrary
                 //assign that value to _minDamage. Otherwise, assign 1 to _minDamage.
 
                 //this.MinDamage++, += 5, could send it over MaxDamage, we don't want that.
-
-                /*
-                if (value > 0 && value <= MaxDamage)
-                {
-                    _minDamage = value;
-                }
-                else
-                {
-                    _minDamage = 1;
-                }
-                 */
             }//end set with business rules
         }//end MinDamage Prop
 
