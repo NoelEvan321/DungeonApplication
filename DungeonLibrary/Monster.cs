@@ -55,7 +55,7 @@ namespace DungeonLibrary
 
         public static Monster GetMonster()
         {
-            Rabbit rabbit = new Rabbit(name: "White Rabbit", maxLife: 25, hitChance: 50, block: 20, maxDamage: 8, minDamage: 2, description: "That's no ordinary rabbit! Look at the bones!", isFluffy: true);
+            Rabbit rabbit = new Rabbit(name: "White Rabbit", maxLife: 25, hitChance: 50, block: 20, maxDamage: 8, minDamage: 2, description: "That's no ordinary rabbit! Look at the bones!", isFluffy: true);//Could add ascii art for my monsters.
             Rabbit babyRabbit = new Rabbit();
 
             Vampire vampire = new Vampire(name: "Dracula", maxLife: 30, hitChance: 70, block: 8, minDamage: 1, maxDamage: 8, description: "The father of all the undead");

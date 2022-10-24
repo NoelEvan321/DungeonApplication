@@ -12,10 +12,9 @@ namespace DungeonLibrary
         //no fields
 
         //Properties // People
-        //Race CharacterRace
-        //EquippedWeapon Weapon
         public Race CharacterRace { get; set; }
         public Weapon EquippedWeapon { get; set; }
+        //maybe a character property. Store as a readline so user can decide on a backstory.
 
         //Constructors // Collect
         public Player(string name, int hitChance, int block, int maxLife, Race characterRace, Weapon equippedWeapon) : base(name, hitChance, block, maxLife)

@@ -4,23 +4,22 @@ namespace Dungeon
 {
     class Program
     {
-        //svm > Tab > Tab creates a static void Main()
         static void Main(string[] args)
         {
             //Title & Introduction
 
             #region Title / Introduction
 
-            Console.Title = "DUNGEON OF DOOM";
+            Console.Title = "Grr's Song";
 
-            Console.WriteLine("Your journey begins...\n");
+            Console.WriteLine("He sings DoomDoomDoomDoomDoom\n");
 
             #endregion
 
             #region Possible Expansion - Levels of Play - Block 5
 
             //Possible Expansion: 
-            //Define levels of play
+            //TODO Define levels of play
             //int[] levels = { 5, 12, 20, 30, 45 };//Use with experience property in Character
             //inherited down to Player and Monster, to scale levelling.
 
@@ -33,6 +32,7 @@ namespace Dungeon
 
             //Weapon Object Creation
             Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1);
+            //TODO add more weapon instances? Could do this in the weapon class and add a GetWeapon().
             #region Possible Expansion
             //Create a list of weapons, and either give the player a random weapon, let them pick a weapon, 
             //or let them pick a WeaponType, and give them a weapon based off of that type.
@@ -53,7 +53,7 @@ namespace Dungeon
             //Display a list of races and let them pick one, or assign one randomly.
             #endregion
 
-            Player player = new Player(name: "Leeroy Jenkins", hitChance: 70, block: 5, maxLife: 40, characterRace: Race.Dwarf, equippedWeapon: sword);
+            Player player = new Player(name: "Leeroy Jenkins", hitChance: 70, block: 5, maxLife: 40, characterRace: Race.Hobitses, equippedWeapon: sword);//TODO update player creation with console readlines? Do in Main Game Loop.
             #endregion
 
             #region Main Game Loop
@@ -232,7 +232,7 @@ namespace Dungeon
                     "You enter a dark room and all you can hear is hair band music blaring.... This is going to be bad!",
                     "Oh no.... the worst of them all... Oprah's bedroom....",
                     "The room looks just like the room you are sitting in right now... or does it?"
-            };
+            };//TODO generate a new list of room descriptions
 
             return rooms[new Random().Next(rooms.Length)];
         }
