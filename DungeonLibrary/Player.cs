@@ -25,33 +25,39 @@ namespace DungeonLibrary
 
             switch (CharacterRace)
             {
-                case Race.human:
+                case Race.Human:
                     HitChance -= 5;
                     MaxLife += 5;
+                    Life += 5;
                     Block += 10;
                     break;
-                case Race.elf:
+                case Race.Elf:
                     HitChance += 5;
                     MaxLife += 5;
+                    Life += 5;
                     Block -= 5;
                     break;
-                case Race.gnome:
+                case Race.Gnome:
                     MaxLife += 15;
+                    Life += 15;
                     Block -= 15;
                     break;
-                case Race.orc:
+                case Race.Orc:
                     HitChance -= 5;
                     MaxLife -= 10;
+                    Life -= 10;
                     Block += 20;
                     break;
-                case Race.kahjiit:
+                case Race.Kahjiit:
                     HitChance += 20;
                     MaxLife += 10;
+                    Life += 10;
                     Block -= 20;
                     break;
-                case Race.hobitses:
+                case Race.Hobitses:
                     HitChance -= 5;
                     MaxLife += 20;
+                    Life += 20;
                     Block += 5;
                     break;
             }//end switch
@@ -75,22 +81,22 @@ namespace DungeonLibrary
             string description = CharacterRace.ToString().Replace('_',' ');
             switch (CharacterRace)
             {
-                case Race.elf:
+                case Race.Elf:
                     description = "Elves have pointy ears!";
                     break;
-                case Race.gnome:
+                case Race.Gnome:
                     description = "Gnomes enjoy long walks in the garden!";
                     break;
-                case Race.orc:
+                case Race.Orc:
                     description = "*grunt*";
                     break;
-                case Race.kahjiit:
+                case Race.Kahjiit:
                     description = "Khajiit has wares.";
                     break;
-                case Race.hobitses:
+                case Race.Hobitses:
                     description = "Potatoes and journeys";
                     break;
-                case Race.human:
+                case Race.Human:
                     description = "Are you Human? Or are you dancer?";
                     break;
             }

@@ -39,56 +39,45 @@ namespace Dungeon
             #endregion
 
             #region Player object creation
+            bool exit = false;
 
-            Console.Write("Welcome to the dungeon, adventurer - What is your name?");
-            string playerName = Console.ReadLine().Trim();
-            Console.WriteLine();
-            //TODO build race selection menu
-            Console.WriteLine("What would you like to be?");
-            Console.WriteLine("A) Human\nB) Orc\nC) Gnome\nD) Kahjiit\nE) Elf\nF) Hobitses");
-            string chosenRace = Console.ReadLine().ToLower().Trim();
-            //Race playerRace = Race.Parse(Race, chosenRace);
-            Race playerRace = Race.human;
-            switch (chosenRace)
-            {
-                case "a":
-                case "human":
-                     playerRace = Race.human;
-                    break;
-                case "b":
-                case "orc":
-                    playerRace = Race.orc;
-                    break;
-                case "c":
-                case "gnome":
-                    playerRace = Race.elf;
-                    break;
-                case "d":
-                case "kahjiit":
-                    playerRace = Race.elf;
-                    break;
-                case "e":
-                case "elf":
-                    playerRace = Race.elf;
-                    break;
-                case "f":
-                case "hobitses":
-                    playerRace = Race.elf;
-                    break;
-            }
-            //TODO build weapon selection menu
-            //Display a list of races and let them pick one, or assign one randomly.
+            
+                //Player name
+                Console.Write("Welcome to the dungeon, adventurer - What is your name?\n");
+                string playerName = Console.ReadLine().Trim();
+                Console.WriteLine();
+                Console.Clear();
+                //Race selection
+                var dudes = Enum.GetValues<Race>().ToList();
+                Console.WriteLine($"What would you like to be {playerName}?");
+                foreach (Race dude in dudes)
+                {
+                    string display = dude.ToString().Replace('_', ' ');
+                    Console.WriteLine($"{(int)dude + 1}) {dude}");
+                }
+                int chosenRace = int.Parse(Console.ReadLine()) - 1;
+
+                Race playerRace = (Race)chosenRace;
+
+                //TODO build weapon selection menu
+                //Display a list of races and let them pick one, or assign one randomly.
+
+                Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace: playerRace, equippedWeapon: sword);
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine(player);
+                Console.WriteLine();
+                Console.Write("Press any key to enter the dungeon. ");
+                Console.ReadLine();
+                Console.Clear();
             #endregion
-
-            Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace:playerRace, equippedWeapon: sword);
-
             #region Main Game Loop
 
             //Counter variable - used in the condition of the loop
-            bool exit = false;
 
             do
             {
+                exit = false;
                 //Generate a random room the player will enter
                 Console.WriteLine(GetRoom());
 
@@ -105,7 +94,7 @@ namespace Dungeon
                 do
                 {
 
-                   
+
                     #region MENU
 
                     //Prompt the user
@@ -118,7 +107,7 @@ namespace Dungeon
 
                     //Capture the user's menu selection
                     ConsoleKey userChoice = Console.ReadKey(true).Key; //Capture the pressed key, hide the key from 
-                    //the console, and execute immediately
+                                                                       //the console, and execute immediately
 
                     //Clear the console
                     Console.Clear();
@@ -142,10 +131,15 @@ namespace Dungeon
                             //Check if the monster is dead
                             if (monster.Life <= 0)
                             {
-                                //Loot, experience, gold, whatever.
 
                                 //Use green to indicate winning
                                 Console.ForegroundColor = ConsoleColor.Green;
+                                //Loot, experience, gold, whatever.
+                                Random random = new Random();
+                                int loot = random.Next(1, 101);
+                                Console.WriteLine($"{monster.Name} drops {loot} coin");
+                                //TODO add rarity to monsters. Make random numgen based on rarity.
+                                //TODO add amount of gold dropped to wallet
 
                                 //output the result
                                 Console.WriteLine($"\nYou killed {monster.Name}!");
@@ -236,8 +230,7 @@ namespace Dungeon
                 #endregion
 
 
-            } while (!exit); //Keep looping as long as exit is false
-
+            } while (!exit);//Keep looping as long as exit is false
 
             #endregion
 
@@ -247,18 +240,18 @@ namespace Dungeon
 
         private static string GetRoom()
         {
-            string[] rooms = /*new string[5]*/
+            string[] rooms = /*new string[9]*/
             {
-                    "The room is dark and musty with the smell of lost souls.",
-                    "You enter a pretty pink powder room and instantly get glitter on you.",
+                    "The room is dark and musty. It smells like darkness... and must.",
+                    "You enter a fairy-chamber... Sorry. There aren't any faries in this game.",
                     "You arrive in a room filled with chairs and a ticket stub machine...DMV",
                     "You enter a quiet library... silence... nothing but silence....",
+                    "You enter a loud library... that stinks... there's a quiet library somewhere, I'm sure.",
                     "As you enter the room, you realize you are standing on a platform surrounded by sharks",
-                    "Oh my.... what is that smell? You appear to be standing in a compost pile",
-                    "You enter a dark room and all you can hear is hair band music blaring.... This is going to be bad!",
-                    "Oh no.... the worst of them all... Oprah's bedroom....",
-                    "The room looks just like the room you are sitting in right now... or does it?"
-            };//TODO generate a new list of room descriptions
+                    "Oh my.... what is that smell? ...this dungeon reminds you of your room.",
+                    "You enter a dark room and you hear a raspy voice...It's a Rolling Stones concert!",
+                    "Oh no... the Oprah show...maybe you'll get a gift",
+            };
 
             return rooms[new Random().Next(rooms.Length)];
         }
