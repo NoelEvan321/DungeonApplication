@@ -12,14 +12,14 @@ namespace Dungeon
 
             Console.Title = "Grr's Song";
 
-            Console.WriteLine("He sings DoomDoomDoomDoomDoom\n");
+            Console.WriteLine("Welcome to Grr's Dungeon!\nHe sings DoomDoomDoomDoomDoom\n");
 
             #endregion
 
-            #region Possible Expansion - Levels of Play - Block 5
+            #region Possible Expansion-levels
 
             //Possible Expansion: 
-            //TODO Define levels of play
+            //TODO set level to monsters killed
             //int[] levels = { 5, 12, 20, 30, 45 };//Use with experience property in Character
             //inherited down to Player and Monster, to scale levelling.
 
@@ -32,29 +32,55 @@ namespace Dungeon
 
             //Weapon Object Creation
             Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1);
-            //TODO add more weapon instances? Could do this in the weapon class and add a GetWeapon().
-            #region Possible Expansion
+            #region Weapon list 
+            //TODO create weapons enum to be stored in inventory and store.
             //Create a list of weapons, and either give the player a random weapon, let them pick a weapon, 
             //or let them pick a WeaponType, and give them a weapon based off of that type.
             #endregion
 
             #region Player object creation
-            #region Possible Expansion - Player Customization - Block 5
 
-            //Possible Expansion: 
-            //Allow player to define chatacter name
-            //Console.Write("Enter your name: ");
-            //string userName = Console.ReadLine();
-            //Console.Clear();
-            //Console.WriteLine("Welcome, {0}! Your journey begins...", userName);
-            //Console.ReadKey();
-            //Console.Clear();
-
+            Console.Write("Welcome to the dungeon, adventurer - What is your name?");
+            string playerName = Console.ReadLine().Trim();
+            Console.WriteLine();
+            //TODO build race selection menu
+            Console.WriteLine("What would you like to be?");
+            Console.WriteLine("A) Human\nB) Orc\nC) Gnome\nD) Kahjiit\nE) Elf\nF) Hobitses");
+            string chosenRace = Console.ReadLine().ToLower().Trim();
+            //Race playerRace = Race.Parse(Race, chosenRace);
+            Race playerRace = Race.human;
+            switch (chosenRace)
+            {
+                case "a":
+                case "human":
+                     playerRace = Race.human;
+                    break;
+                case "b":
+                case "orc":
+                    playerRace = Race.orc;
+                    break;
+                case "c":
+                case "gnome":
+                    playerRace = Race.elf;
+                    break;
+                case "d":
+                case "kahjiit":
+                    playerRace = Race.elf;
+                    break;
+                case "e":
+                case "elf":
+                    playerRace = Race.elf;
+                    break;
+                case "f":
+                case "hobitses":
+                    playerRace = Race.elf;
+                    break;
+            }
+            //TODO build weapon selection menu
             //Display a list of races and let them pick one, or assign one randomly.
             #endregion
 
-            Player player = new Player(name: "Leeroy Jenkins", hitChance: 70, block: 5, maxLife: 40, characterRace: Race.Hobitses, equippedWeapon: sword);//TODO update player creation with console readlines? Do in Main Game Loop.
-            #endregion
+            Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace:playerRace, equippedWeapon: sword);
 
             #region Main Game Loop
 
