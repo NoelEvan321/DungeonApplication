@@ -24,14 +24,15 @@ namespace DungeonLibrary
             Block = 20;
             MinDamage = 1;
             Description = "It's just a cute little bunny... Why would you hurt it??";
+            Rarity = "Common";
             IsFluffy = false;
         }
         //Parent compliant (Monster) Ctor 
         //Intellisense quick action on the Parent name in the class declaration.
-        public Rabbit(string name, int maxLife, int hitChance, int block, //Character
-                      int maxDamage, int minDamage, string description, //Monster
-                      bool isFluffy) //Rabbit
-            : base(name, maxLife, hitChance, block, maxDamage, minDamage, description)
+        public Rabbit(string name, int maxLife, int hitChance, int block,
+                      int maxDamage, int minDamage, string description, string rarity,
+                      bool isFluffy)
+            : base(name, maxLife, hitChance, block, maxDamage, minDamage, description, rarity)
         {
             IsFluffy = isFluffy;
         }

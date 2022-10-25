@@ -11,8 +11,8 @@ namespace DungeonLibrary
         public int BonusBlock { get; set; }
         public int HidePercent { get; set; }
 
-        public Turtle(string name, int maxLife, int hitChance, int block, int maxDamage, int minDamage, string description, int bonusBlock, int hidePercent) 
-            : base(name, maxLife, hitChance, block, maxDamage, minDamage, description)
+        public Turtle(string name, int maxLife, int hitChance, int block, int maxDamage, int minDamage, string description, string rarity, int bonusBlock, int hidePercent) 
+            : base(name, maxLife, hitChance, block, maxDamage, minDamage, description, rarity)
         {
             //pass everything from Monster back to Monster using : base.
             //Handle unique turtlie things here
@@ -33,6 +33,7 @@ namespace DungeonLibrary
             Name = "Baby Turtle";
             Description = "It's a cute baby turtle... keep it " +
                 "away from the ooze.";
+            Rarity = "Common";
             BonusBlock = 5;
             HidePercent = 10;
 

@@ -11,11 +11,11 @@ namespace DungeonLibrary
         //Potential Expansion:
         //Present a list of races to the user so they can chose one.
         //Alternatively, assign a race randomly when the user starts the game.
-        human,//Description: Not pointy ears
-        orc,//Description: *grunt*
-        elf,//Description: Pointy ears
-        kahjiit,//Description: Kahjiit has wares
-        gnome,//Description: Enjoys long walks in the garden
-        hobitses,//Description: Potatoes and journeys
+        Human,//Description: Not pointy ears
+        Orc,//Description: *grunt*
+        Elf,//Description: Pointy ears
+        Kahjiit,//Description: Kahjiit has wares
+        Gnome,//Description: Enjoys long walks in the garden
+        Hobitses,//Description: Potatoes and journeys
     }
 }
