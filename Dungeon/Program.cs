@@ -22,6 +22,7 @@ namespace Dungeon
             int level = score;//could make some rules on this to require 3 or 4 kills to advance a level.
             int wallet = 0;//could link cash amount to player.
             bool isPurchased = false;
+            List<Product> inventory = new List<Product>();
             #endregion
 
             #region Product List 
@@ -69,6 +70,9 @@ namespace Dungeon
                 Console.WriteLine("All Hobitses must be named Sam.");
                 player.Name = "Sam";
             }
+            Console.WriteLine("Everybody starts with their very own sword!");
+            inventory.Add(player.EquippedWeapon);
+
             //print player information
                 Console.WriteLine(player);
                 Console.WriteLine();
@@ -109,7 +113,7 @@ namespace Dungeon
                         "P) Player Info\n" +
                         "M) Monster Info\n" +
                         "S) Store\n" +
-                        "I) Inventory\n"
+                        "I) View Inventory\n" +
                         "E) Equip Weapon\n" +
                         "U) Use Potion\n" +
                         "X) Exit\n");
@@ -138,13 +142,13 @@ namespace Dungeon
                                 Random random = new Random();
                                 int potionRandPercentage = random.Next(0, 101);
                                 int loot = 0;
-                                string potionDropOne = potionSmall.Name;
                                 //int potionDropThreshold = 50; less than 50 yeilds not potion drop
                                 if (monster.Rarity == "Common")
                                 {
                                     if(potionRandPercentage > 60 && potionRandPercentage < 90)
                                     {
-                                        //TODO add potionSmall to inventory
+                                        Console.WriteLine($"{monster.Name} drops {potionSmall.Name}!");
+                                        inventory.Add(potionSmall);
                                     }
 
                                     loot = random.Next(1, 51);
@@ -154,7 +158,8 @@ namespace Dungeon
                                 {
                                     if (potionRandPercentage > 90 && potionRandPercentage < 100)
                                     {
-                                        //TODO add potionNormal to inventory
+                                        Console.WriteLine($"{monster.Name} drops {potionNormal.Name}!");
+                                        inventory.Add(potionNormal);
                                     }
                                     loot = random.Next(41, 101);
                                     wallet += loot;
@@ -163,7 +168,8 @@ namespace Dungeon
                                 {
                                     if (potionRandPercentage > 99 && potionRandPercentage < 100)
                                     {
-                                        //TODO add potionBig to inventory
+                                        Console.WriteLine($"{monster.Name} drops {potionBig.Name}!");
+                                        inventory.Add(potionBig);
                                     }
                                     loot = random.Next(151, 251);
                                     wallet += loot;
@@ -231,6 +237,13 @@ namespace Dungeon
                         #endregion
 
                         #region Inventory
+                        case ConsoleKey.I:
+                            //Inventory
+                            foreach (Product i in inventory)
+                            {
+                                Console.WriteLine(i.Name);
+                            }
+                            break;
 
                         #endregion
 
