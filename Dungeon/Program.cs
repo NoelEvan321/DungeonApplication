@@ -16,20 +16,13 @@ namespace Dungeon
 
             #endregion
 
-            #region Possible Expansion-levels
-
-            //Possible Expansion: 
-            //TODO set level to monsters killed
-            //int[] levels = { 5, 12, 20, 30, 45 };//Use with experience property in Character
-            //inherited down to Player and Monster, to scale levelling.
-
-            #endregion
-
-
             //Variable to Track Score
-
+            #region Variable Declarations
             int score = 0;
             int level = score;//could make some rules on this to require 3 or 4 kills to advance a level.
+            int wallet = 0;//could link cash amount to player.
+            bool isPurchased = false;
+            #endregion
 
             #region Product List 
             //Product Object Creation
@@ -67,17 +60,16 @@ namespace Dungeon
 
                 Race playerRace = (Race)chosenRace;
 
-                //TODO build weapon selection menu
-                //Display a list of races and let them pick one, or assign one randomly.
-
                 Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace: playerRace, equippedWeapon: sword);
                 Console.Clear();
                 Console.WriteLine();
+            //convert hobit name to Sam
             if (playerRace==Race.Hobit)
             {
                 Console.WriteLine("All Hobitses must be named Sam.");
                 player.Name = "Sam";
             }
+            //print player information
                 Console.WriteLine(player);
                 Console.WriteLine();
                 Console.Write("Press any key to enter the dungeon. ");
@@ -116,11 +108,14 @@ namespace Dungeon
                         "R) Run Away\n" +
                         "P) Player Info\n" +
                         "M) Monster Info\n" +
+                        "S) Store\n" +
+                        "I) Inventory\n"
+                        "E) Equip Weapon\n" +
+                        "U) Use Potion\n" +
                         "X) Exit\n");
 
                     //Capture the user's menu selection
-                    ConsoleKey userChoice = Console.ReadKey(true).Key; //Capture the pressed key, hide the key from 
-                                                                       //the console, and execute immediately
+                    ConsoleKey userChoice = Console.ReadKey(true).Key;
 
                     //Clear the console
                     Console.Clear();
@@ -128,40 +123,52 @@ namespace Dungeon
                     //Use branching logic to act upon the user's selection
                     switch (userChoice)
                     {
+                        #region Combat
                         case ConsoleKey.A:
 
                             //Combat
-                            #region Possible Expansion - Racial/Weapon Bonus
-
-                            //Possible Expansion: Give certain character races or characters with a certain weapon an advantage
-                            //if (player.CharacterRace == Race.DarkElf)
-                            //{
-                            //    Combat.DoAttack(player, monster);
-                            //}
-                            #endregion
 
                             Combat.DoBattle(player, monster);
                             //Check if the monster is dead
                             if (monster.Life <= 0)
                             {
-
                                 //Use green to indicate winning
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                //Loot, experience, gold, whatever.
+                                #region Loot Logic
                                 Random random = new Random();
+                                int potionRandPercentage = random.Next(0, 101);
                                 int loot = 0;
+                                string potionDropOne = potionSmall.Name;
+                                //int potionDropThreshold = 50; less than 50 yeilds not potion drop
                                 if (monster.Rarity == "Common")
                                 {
+                                    if(potionRandPercentage > 60 && potionRandPercentage < 90)
+                                    {
+                                        //TODO add potionSmall to inventory
+                                    }
+
                                     loot = random.Next(1, 51);
+                                    wallet += loot;
                                 }
                                 else if (monster.Rarity == "Uncommon")
                                 {
+                                    if (potionRandPercentage > 90 && potionRandPercentage < 100)
+                                    {
+                                        //TODO add potionNormal to inventory
+                                    }
                                     loot = random.Next(41, 101);
+                                    wallet += loot;
                                 }
                                 else
                                 {
+                                    if (potionRandPercentage > 99 && potionRandPercentage < 100)
+                                    {
+                                        //TODO add potionBig to inventory
+                                    }
                                     loot = random.Next(151, 251);
+                                    wallet += loot;
                                 }
+                                #endregion
                                 Console.WriteLine($"{monster.Name} drops {loot} coin");
                                 //TODO add amount of gold dropped to wallet
 
@@ -180,7 +187,9 @@ namespace Dungeon
 
                             break;
 
+                        #endregion
 
+                        #region Run Away
                         case ConsoleKey.R:
 
                             //Run Away - Attack of Opportunity
@@ -194,7 +203,9 @@ namespace Dungeon
 
                             reload = true;
                             break;
+                        #endregion
 
+                        #region Player Stats
                         case ConsoleKey.P:
 
                             //Player Stats
@@ -202,7 +213,9 @@ namespace Dungeon
                             Console.WriteLine(player);
 
                             break;
+                        #endregion
 
+                        #region Monster Stats
                         case ConsoleKey.M:
 
                             //Monster Stats
@@ -211,7 +224,25 @@ namespace Dungeon
 
                             break;
 
+                        #endregion
 
+                        #region Store
+
+                        #endregion
+
+                        #region Inventory
+
+                        #endregion
+
+                        #region Equip Weapon
+
+                        #endregion
+
+                        #region Equip Potion
+
+                        #endregion
+
+                        #region Exit Loop
                         case ConsoleKey.X:
                         case ConsoleKey.E:
                         case ConsoleKey.Escape:
@@ -222,7 +253,7 @@ namespace Dungeon
                             exit = true;
 
                             break;
-
+                        #endregion
                         default:
 
                             Console.WriteLine("Thou hast chosen an improper option. Triest thou again.");

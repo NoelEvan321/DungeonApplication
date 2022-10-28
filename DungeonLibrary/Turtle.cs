@@ -30,9 +30,8 @@ namespace DungeonLibrary
             MinDamage = 0;
             HitChance = 5;
             Block = 10;
-            Name = "Baby Turtle";
-            Description = "It's a cute baby turtle... keep it " +
-                "away from the ooze.";
+            Name = "Lesser Lion Turtle";
+            Description = "It's a cute baby turtle... keep it. ";
             Rarity = "Common";
             BonusBlock = 5;
             HidePercent = 10;

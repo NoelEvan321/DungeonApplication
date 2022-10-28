@@ -55,18 +55,17 @@ namespace DungeonLibrary
             return new Random().Next(MinDamage, MaxDamage + 1);
 
         }
-        //TODO change monster names and descriptions
         public static Monster GetMonster()
         {
-            Rabbit rabbit = new Rabbit(name: "White Rabbit", maxLife: 25, hitChance: 50, block: 20, maxDamage: 8, minDamage: 2, description: "That's no ordinary rabbit! Look at the bones!", rarity: "Uncommon", isFluffy: true);//Could add ascii art for my monsters.
+            Rabbit rabbit = new Rabbit(name: "Papa Lapin", maxLife: 30, hitChance: 50, block: 20, maxDamage: 10, minDamage: 2, description: "That's a scary rabbit...", rarity: "Uncommon", isFluffy: true);//Could add ascii art for my monsters.
             Rabbit babyRabbit = new Rabbit();
 
-            Vampire vampire = new Vampire(name: "Dracula", maxLife: 30, hitChance: 70, block: 8, minDamage: 1, maxDamage: 8, description: "The father of all the undead", rarity: "Rare");
+            Vampire vampire = new Vampire(name: "Batty: Menace of the Night", maxLife: 20, hitChance: 50, block: 6, minDamage: 1, maxDamage: 8, description: "Night is a scary time to be outside.", rarity: "Uncommon");
 
-            Turtle turtle = new Turtle(name: "Mikey", maxLife: 25, hitChance: 50, block: 10, maxDamage: 4, minDamage: 1, description: "He is no longer a teenager, but he is still a mutant turtle", rarity: "Uncommon", bonusBlock: 3, hidePercent: 10);
+            Turtle turtle = new Turtle(name: "The Lion Turtle", maxLife: 45, hitChance: 70, block: 10, maxDamage: 7, minDamage: 1, description: "He is an island...with knowledge?", rarity: "Rare", bonusBlock: 3, hidePercent: 10);
             Turtle babyTurtle = new Turtle();
 
-            Dragon dragon = new Dragon(name: "Smaug", maxLife: 35, hitChance: 65, block: 20, maxDamage: 15, minDamage: 1, description: "The last great dragon", rarity: "Rare", isScaly: true);
+            Dragon dragon = new Dragon(name: "Bahamut", maxLife: 50, hitChance: 75, block: 20, maxDamage: 10, minDamage: 1, description: "Bringer of Doom", rarity: "Rare", isScaly: true);
             Dragon babyDragon = new Dragon();
 
             List<Monster> monsters = new List<Monster>()

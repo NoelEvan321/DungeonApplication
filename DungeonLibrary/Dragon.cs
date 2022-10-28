@@ -20,13 +20,13 @@ namespace DungeonLibrary
         {
             MaxLife = 6;
             MaxDamage = 3;
-            Name = "Baby dragon";
+            Name = "Acolyte";
             Life = 6;
             HitChance = 25;
             Block = 20;
             MinDamage = 1;
-            Description = "A freshly-hatched baby dragon. It still looks dangerous...";
-            Rarity = "Common";
+            Description = "A lesser drake and its pet human.";
+            Rarity = "Uncommon";
             IsScaly = false;
         }
         public override string ToString()
