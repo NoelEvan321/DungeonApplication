@@ -16,6 +16,6 @@ namespace DungeonLibrary
         Elf,//Description: Pointy ears
         Kahjiit,//Description: Kahjiit has wares
         Gnome,//Description: Enjoys long walks in the garden
-        Hobitses,//Description: Potatoes and journeys
+        Hobit,//Description: Potatoes and journeys
     }
 }

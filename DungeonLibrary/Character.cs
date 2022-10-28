@@ -80,7 +80,7 @@
             return $"----- {Name} -----\n" +
                 $"Life: {Life} of {MaxLife}\n" +
                 $"Hit Chance: {CalcHitChance()}%\n" +
-                $"Block: {Block}" + $"Initiative: {Initiative}";
+                $"Block: {Block} " + $"Initiative: {Initiative}";
         }
 
         public virtual int CalcBlock() { return Block; }

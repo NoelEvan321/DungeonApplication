@@ -65,6 +65,11 @@ namespace Dungeon
                 Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace: playerRace, equippedWeapon: sword);
                 Console.Clear();
                 Console.WriteLine();
+            if (playerRace==Race.Hobit)
+            {
+                Console.WriteLine("All Hobitses must be named Sam.");
+                player.Name = "Sam";
+            }
                 Console.WriteLine(player);
                 Console.WriteLine();
                 Console.Write("Press any key to enter the dungeon. ");
@@ -136,9 +141,20 @@ namespace Dungeon
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 //Loot, experience, gold, whatever.
                                 Random random = new Random();
-                                int loot = random.Next(1, 101);
+                                int loot = 0;
+                                if (monster.Rarity == "Common")
+                                {
+                                    loot = random.Next(1, 51);
+                                }
+                                else if (monster.Rarity == "Uncommon")
+                                {
+                                    loot = random.Next(41, 101);
+                                }
+                                else
+                                {
+                                    loot = random.Next(151, 251);
+                                }
                                 Console.WriteLine($"{monster.Name} drops {loot} coin");
-                                //TODO add rarity to monsters. Make random numgen based on rarity.
                                 //TODO add amount of gold dropped to wallet
 
                                 //output the result
