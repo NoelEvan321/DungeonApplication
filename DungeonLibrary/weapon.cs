@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace DungeonLibrary
 {
-    public class Weapon
+    public class Weapon : Product
     {
         //Fields // Funny
         private int _minDamage;
         private int _maxDamage;
-        private string? _name;
         private int _bonusHitChance;
         private bool _isTwoHanded;
         private WeaponType _type;
@@ -21,12 +20,6 @@ namespace DungeonLibrary
         {
             get { return _maxDamage; }
             set { _maxDamage = value; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
         }
 
         public int BonusHitChance
@@ -64,7 +57,7 @@ namespace DungeonLibrary
 
         //Constructors // Collect
         public Weapon(int maxDamage, string name, int bonusHitChance, bool isTwoHanded, 
-            WeaponType type, int minDamage)
+            WeaponType type, int minDamage, int price, int purchaseLevel) : base(price, name, purchaseLevel )
         {
             //Assignment
             //Property = parameter,
@@ -72,7 +65,6 @@ namespace DungeonLibrary
             //Any properties with business rules that rely on other properties MUST come AFTER
             //those other properties are set.
             MaxDamage = maxDamage;
-            Name = name;
             BonusHitChance = bonusHitChance;
             IsTwoHanded = isTwoHanded;
             Type = type;
@@ -84,9 +76,9 @@ namespace DungeonLibrary
         {
             //return base.ToString();
             //Namespace.ClassName
-            return $"{Name}\t{MinDamage} to {MaxDamage} Damage\n" +
+            return base.ToString() + $"{MinDamage} to {MaxDamage} Damage\n" +
                    $"Bonus Hit: {BonusHitChance}%\n" +
-                   $"Type: {Type}\t\t{(IsTwoHanded ? "Two-Handed" : "One-Handed")}";
+                   $"Type: {Type}\t\t{(IsTwoHanded ? "Two-Handed" : "One-Handed")}\n";
         }//end 
     }
 }

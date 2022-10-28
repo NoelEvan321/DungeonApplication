@@ -31,7 +31,15 @@ namespace Dungeon
             int score = 0;
 
             //Weapon Object Creation
-            Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1);
+            Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1, 0, 0);
+            Weapon dagger = new Weapon(10, "Sting", 7, false, WeaponType.Knife, 2, 35, 1);
+            Weapon mace = new Weapon(15, "Mace", 8, false, WeaponType.Blunt, 10, 40, 2);
+            Weapon maceBig = new Weapon(25, "Spikey", 5, true, WeaponType.Blunt, 10, 100, 4);
+            Weapon daggerBig = new Weapon(20, "Sting", 10, false, WeaponType.Knife, 18, 100, 4);
+            Weapon bow = new Weapon(20, "Yew Bow", 15, true, WeaponType.Projectile, 15, 150, 4);
+            Weapon swordBig = new Weapon(50, "Excaliburrrrr", 15, true, WeaponType.Sword, 25, 400, 5);
+
+            //TODO write linq for purchase level check and to display weapons to user.
             #region Weapon list 
             //TODO create weapons enum to be stored in inventory and store.
             //Create a list of weapons, and either give the player a random weapon, let them pick a weapon, 
