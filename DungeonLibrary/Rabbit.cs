@@ -16,9 +16,9 @@ namespace DungeonLibrary
         //Default Ctor to set some basic values for a generic monster of this type
         public Rabbit()
         {
-            MaxLife = 6;
+            MaxLife = 10;
             MaxDamage = 3;
-            Name = "Baby Rabbit";
+            Name = "Baby Lapin";
             Life = MaxLife;
             HitChance = 20;
             Block = 20;
