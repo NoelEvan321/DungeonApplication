@@ -101,7 +101,7 @@ namespace DungeonLibrary
                     break;
             }
                     
-            return base.ToString() + $"\nWeapon:\n{EquippedWeapon}\nBlock: {Block}\n" +
+            return base.ToString() + $"\nWeapon:\n{EquippedWeapon}\n" +
                 $"Description: {description}";
         }
     }

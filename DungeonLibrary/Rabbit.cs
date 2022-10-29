@@ -40,7 +40,7 @@ namespace DungeonLibrary
 
         public override string ToString()
         {
-            return base.ToString() + (IsFluffy ? "It's fluffy" : "It's not so fluffy");
+            return base.ToString() + (IsFluffy ? "\nIt's fluffy. +50% block." : "\nIt's fur is matted.");
         }
 
         //Character CalcBlock = Block
@@ -49,7 +49,7 @@ namespace DungeonLibrary
         public override int CalcBlock()
         {
             int calculatedBlock = Block;
-            //Apply a 50% increase to the rabbit's if it's fluffy
+            //Apply a 50% increase to the rabbit's block if it's fluffy
             if (IsFluffy)
             {
                 calculatedBlock += calculatedBlock / 2;

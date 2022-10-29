@@ -18,6 +18,7 @@ namespace Dungeon
 
             //Variable to Track Score
             #region Variable Declarations
+            int inv = 0;
             int score = 0;
             int level = score;//could make some rules on this to require 3 or 4 kills to advance a level.
             int wallet = 0;//could link cash amount to player.
@@ -230,10 +231,10 @@ namespace Dungeon
 
                             break;
 
-                        #endregion
+                            #endregion
 
-                        #region Store
-
+                            #region Store
+                            Console.WriteLine($"You have {wallet} coin!");
                         #endregion
 
                         #region Inventory
@@ -248,16 +249,64 @@ namespace Dungeon
                         #endregion
 
                         #region Equip Weapon
+                        case ConsoleKey.E:
+                            Console.WriteLine($"What weapon would you like to use, {playerName}?");
+                            List<Weapon> weapons = new List<Weapon>();
+                            int count = 0;
+                            foreach (Product w in inventory)
+                            {
+                                count++;
+                                if (w.GetType() == typeof(Weapon))
+                                {
+                                    Console.WriteLine($"{count})\n{(Weapon)w}");
 
+                                    weapons.Add((Weapon)w);
+                                }
+                            }
+                            int chosenWeapon = int.Parse(Console.ReadLine()) - 1;
+                            
+                            player.EquippedWeapon = weapons[chosenWeapon];
+                            break;
                         #endregion
 
-                        #region Equip Potion
+                        #region Use Potion
+                        case ConsoleKey.U:
+                            Console.WriteLine($"Your life total is {player.Life} /{player.MaxLife} ");
+                            Console.WriteLine("Would you like to use a potion? Y/N");
+                            string answerPotion = Console.ReadLine().ToLower().Trim();
+                            switch (answerPotion)
+                            {
+                                case "yes":
+                                case "y":
+                                    Console.WriteLine("Which potion would you like to use?");
+                                List<int> indexList = new List<int>();
+                                Dictionary<int, Potion> potionDict = new Dictionary<int, Potion>();
+                                foreach(Product p in inventory)
+                                {
+                                        if (p.GetType() == typeof(Potion))
+                                        {
+                                            inv = inventory.IndexOf(p);
+                                            indexList.Add(inv);
+                                            potionDict.Add(inv, (Potion)p);
+                                            Console.WriteLine($"{inv})\n {p}");
+                                        }
+                                }
+                                //numbers that make sense coming soon.
+                                int chosenPotion = int.Parse(Console.ReadLine());
+                                    player.Life += potionDict[chosenPotion].Replenishment;
+                                inventory.RemoveAt(chosenPotion);
+                                    break;
+                                case "no":
 
+                                case "n":
+                                    break;
+
+                            }  
+                            break;
                         #endregion
 
                         #region Exit Loop
                         case ConsoleKey.X:
-                        case ConsoleKey.E:
                         case ConsoleKey.Escape:
                             //Exit
 

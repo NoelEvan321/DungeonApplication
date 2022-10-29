@@ -25,13 +25,13 @@ namespace DungeonLibrary
             HitChance = 25;
             Block = 20;
             MinDamage = 1;
-            Description = "A lesser drake and its pet human.";
+            Description = "A lesser drake, an acolyte of Bahamut... and its pet human.";
             Rarity = "Uncommon";
             IsScaly = false;
         }
         public override string ToString()
         {
-            return base.ToString() + "\n" + (IsScaly ? "Coated in thick scales" : "Has a soft, underdeveloped hide");
+            return base.ToString() + "\n" + (IsScaly ? "\n Coated in thick scales. +50% block." : "\nHas a soft, underdeveloped hide");
         }
 
         public override int CalcBlock()

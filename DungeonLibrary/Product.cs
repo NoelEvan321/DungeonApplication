@@ -36,8 +36,8 @@ namespace DungeonLibrary
         }
         public override string ToString()
         {
-            return $"Product Price: {Price} " + $"Product Name: {Name}" +
-                $"Required Level for Purchase: {PurchaseLevel}";
+            return $"\nProduct Price: {Price}\t" + $"Product Name: {Name}\n" +
+                $"Required Level for Purchase:\t{PurchaseLevel}\n";
         }
     }
 }
