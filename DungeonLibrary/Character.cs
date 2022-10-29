@@ -1,4 +1,5 @@
-﻿namespace DungeonLibrary
+﻿
+namespace DungeonLibrary
 {
     //The "Abstract" modifier:
     //Denotes this datatype class is "incomplete" -- we don't intend
@@ -77,10 +78,10 @@
 
         public override string ToString()
         {
-            return $"----- {Name} -----\n" +
+            return $"\n----- {Name} -----\n" +
                 $"Life: {Life} of {MaxLife}\n" +
                 $"Hit Chance: {CalcHitChance()}%\n" +
-                $"Block: {Block} " + $"Initiative: {Initiative}";
+                $"Block: {Block}\t" + $"Initiative: {Initiative}";
         }
 
         public virtual int CalcBlock() { return Block; }

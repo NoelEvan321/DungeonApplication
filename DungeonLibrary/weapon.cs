@@ -76,7 +76,7 @@ namespace DungeonLibrary
         {
             //return base.ToString();
             //Namespace.ClassName
-            return base.ToString() + $"{MinDamage} to {MaxDamage} Damage\n" +
+            return base.ToString() + $"\nDeals: {MinDamage} to {MaxDamage} Damage\n" +
                    $"Bonus Hit: {BonusHitChance}%\n" +
                    $"Type: {Type}\t\t{(IsTwoHanded ? "Two-Handed" : "One-Handed")}\n";
         }//end 
