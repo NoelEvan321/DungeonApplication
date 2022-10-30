@@ -26,10 +26,6 @@ namespace DungeonLibrary
             switch (CharacterRace)
             {
                 case Race.Human:
-                    HitChance -= 5;
-                    MaxLife += 5;
-                    Life += 5;
-                    Block += 10;
                     break;
                 case Race.Elf:
                     HitChance += 5;
