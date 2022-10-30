@@ -122,6 +122,7 @@ namespace Dungeon
                         "U) Use Potion\n" +
                         "X) Exit\n");
 
+
                     //Capture the user's menu selection
                     ConsoleKey userChoice = Console.ReadKey(true).Key;
 
@@ -285,16 +286,16 @@ namespace Dungeon
 
                         #region Equip Weapon
                             //TODO fix the indexing for this menu.
-                            //TODO Add unit testing x5
                         case ConsoleKey.E:
                             Console.WriteLine($"What weapon would you like to use, {playerName}?");
                             List<Weapon> weapons = new List<Weapon>();
                             int count = 0;
                             foreach (Product w in inventory)
                             {
-                                count++;
+                                
                                 if (w.GetType() == typeof(Weapon))
                                 {
+                                    count++;
                                     Console.WriteLine($"{count})\n{(Weapon)w}");
 
                                     weapons.Add((Weapon)w);
