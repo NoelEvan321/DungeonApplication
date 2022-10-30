@@ -15,7 +15,6 @@ namespace DungeonLibrary
         private int _maxLife;
         private int _initiative;
         //Properties // People
-
         public string Name
         {
             get { return _name; }
