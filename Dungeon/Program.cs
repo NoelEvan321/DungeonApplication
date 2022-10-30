@@ -28,6 +28,7 @@ namespace Dungeon
 
             #region Product List 
             //Product Object Creation
+            
             Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1, 0, 0);
             Weapon dagger = new Weapon(10, "Short Blade", 7, false, WeaponType.Knife, 2, 35, 1);
             Weapon mace = new Weapon(15, "Mace", 8, false, WeaponType.Blunt, 10, 40, 2);
@@ -39,7 +40,9 @@ namespace Dungeon
             Potion potionNormal = new Potion("Health", "Normal Potion", "Uncommon", 20, 50, 1);
             Potion potionBig = new Potion("Health", "Big Potion", "Uncommon", 50, 150, 3);
 
-            //TODO write linq for purchase level check and to display weapons to user.
+            List<Product> items = new List<Product> {dagger,mace,maceBig,daggerBig,bow,swordBig,potionSmall,potionNormal,potionBig};
+
+           
             #endregion
             #region Player object creation
             bool exit = false;
@@ -177,7 +180,7 @@ namespace Dungeon
                                 }
                                 #endregion
                                 Console.WriteLine($"{monster.Name} drops {loot} coin");
-                                //TODO add amount of gold dropped to wallet
+                                
 
                                 //output the result
                                 Console.WriteLine($"\nYou killed {monster.Name}!");
@@ -231,10 +234,42 @@ namespace Dungeon
 
                             break;
 
-                            #endregion
+                        #endregion
 
-                            #region Store
-                            Console.WriteLine($"You have {wallet} coin!");
+                        #region Store
+                        case ConsoleKey.S:
+
+                            Console.WriteLine($"You have {wallet} coin!\n");
+                            var storeItems = items.Where(x => x.PurchaseLevel <= score).ToList();
+                            int storeCount = 0;
+                            foreach(var item in storeItems)
+                            {
+                                if (item.GetType() == typeof(Potion))
+                                {
+                                    storeCount++;
+                                    Console.WriteLine($"\n{storeCount})\n {(Potion)item}\n");
+                                }
+                                else if (item.GetType() == typeof(Weapon))
+                                {
+                                    storeCount++;
+                                    Console.WriteLine($"\n{storeCount})\n {(Weapon)item}\n");
+                                }
+                            }
+                            Console.WriteLine("Which product would you like to purchase?");
+                            int chosenItem = int.Parse(Console.ReadLine())-1;
+                            if ((wallet - storeItems[chosenItem].Price)>=0)
+                            {
+                                wallet-=storeItems[chosenItem].Price;
+                                inventory.Add(storeItems[chosenItem]);
+                            Console.WriteLine($"\nYou've purchased {storeItems[chosenItem].Name} for {storeItems[chosenItem].Price} coin.");
+                            Console.WriteLine($"\n Your wallet: {wallet}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("You don't have the coin for that item!");
+                            }
+                            storeItems.Clear();
+                            break;
                         #endregion
 
                         #region Inventory
@@ -249,6 +284,8 @@ namespace Dungeon
                         #endregion
 
                         #region Equip Weapon
+                            //TODO fix the indexing for this menu.
+                            //TODO Add unit testing x5
                         case ConsoleKey.E:
                             Console.WriteLine($"What weapon would you like to use, {playerName}?");
                             List<Weapon> weapons = new List<Weapon>();
@@ -271,7 +308,19 @@ namespace Dungeon
 
                         #region Use Potion
                         case ConsoleKey.U:
-                            Console.WriteLine($"Your life total is {player.Life} /{player.MaxLife} ");
+                            Console.WriteLine($"Your life total is {player.Life} / {player.MaxLife}\n");
+                            List<int> indexList = new List<int>();
+                            List<Product> potionList = new List<Product>();
+                            foreach (Product p in inventory)
+                            {
+                                if (p.GetType() == typeof(Potion))
+                                {
+                                    inv = inventory.IndexOf(p);
+                                    indexList.Add(inv);
+                                    potionList.Add((Potion)p);
+                                    Console.WriteLine($"{inv})\n {p}");
+                                }
+                            }
                             Console.WriteLine("Would you like to use a potion? Y/N");
                             string answerPotion = Console.ReadLine().ToLower().Trim();
                             switch (answerPotion)
@@ -279,27 +328,16 @@ namespace Dungeon
                                 case "yes":
                                 case "y":
                                     Console.WriteLine("Which potion would you like to use?");
-                                List<int> indexList = new List<int>();
-                                Dictionary<int, Potion> potionDict = new Dictionary<int, Potion>();
-                                foreach(Product p in inventory)
-                                {
-                                        if (p.GetType() == typeof(Potion))
-                                        {
-                                            inv = inventory.IndexOf(p);
-                                            indexList.Add(inv);
-                                            potionDict.Add(inv, (Potion)p);
-                                            Console.WriteLine($"{inv})\n {p}");
-                                        }
-                                }
                                 //numbers that make sense coming soon.
                                 int chosenPotion = int.Parse(Console.ReadLine());
-                                    player.Life += potionDict[chosenPotion].Replenishment;
+                                    Potion playerPotion = (Potion)potionList[chosenPotion];
+                                    player.Life += playerPotion.Replenishment;
                                 inventory.RemoveAt(chosenPotion);
                                     break;
                                 case "no":
-
                                 case "n":
                                     break;
+                                    potionList.Clear();
 
                             }  
                             break;
