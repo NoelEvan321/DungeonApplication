@@ -50,7 +50,7 @@ namespace DungeonLibrary
                     Life += 10;
                     Block -= 20;
                     break;
-                case Race.Hobit:
+                case Race.Hobbit:
                     HitChance -= 5;
                     MaxLife += 20;
                     Life += 20;
@@ -89,7 +89,7 @@ namespace DungeonLibrary
                 case Race.Kahjiit:
                     description = "Khajiit has wares.";
                     break;
-                case Race.Hobit:
+                case Race.Hobbit:
                     description = "Potatoes and adventures";
                     break;
                 case Race.Human:
