@@ -41,16 +41,18 @@ namespace UnitTests
             Assert.True(actual);
         }
         [Fact]
-        public void checkCombat()
+        public void checkCombatTypes()
         {
             Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1, 0, 0);
             Player player = new Player(name: "Johny", hitChance: 70, block: 5, maxLife: 40, characterRace: Race.Human, equippedWeapon: sword);
             Vampire vampire = new Vampire(name: "Batty: Menace of the Night", maxLife: 20, hitChance: 50, block: 6, minDamage: 1, maxDamage: 8, description: "Night is a scary time to be outside.", rarity: "Uncommon");
-            Monster expected = vampire;
-            Monster actual = Monster.GetMonster();
+            bool expected = vampire.GetType() == typeof(Monster);
+            Monster value = Monster.GetMonster();
+            bool actual = value.GetType() == typeof(Monster);
             Assert.Equal(expected, actual);
         }
     }
 }
 //I'm not really sure how this should work. I have multipe sections where I obtain user input and the values won't exist inside the context of the program.
 //Moreover player params change based on race as is in a switch in the player class? Would it have been better to change the races to classes of their own so they can have +/- values for these combat params?
+//Any ideas would be welcome
