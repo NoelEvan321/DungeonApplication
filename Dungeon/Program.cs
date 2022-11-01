@@ -246,6 +246,7 @@ namespace Dungeon
                             var storeItems = items.Where(x => x.PurchaseLevel <= score).ToList();
                             var invItems = inventory.Where(x => x.PurchaseLevel <= score).ToList();
                             int storeCount = 0;
+
                             if (score>0)
                             {
                                 foreach (var item in storeItems)
@@ -295,7 +296,7 @@ namespace Dungeon
                         #endregion
 
                         #region Equip Weapon
-                            //TODO fix the indexing for this menu.
+                            
                         case ConsoleKey.E:
                             Console.WriteLine($"What weapon would you like to use, {playerName}?");
                             List<Weapon> weapons = new List<Weapon>();
@@ -318,24 +319,29 @@ namespace Dungeon
                         #endregion
 
                         #region Use Potion
-                            //TODO add potion exit option
+                            
                         case ConsoleKey.U:
                             Console.WriteLine($"Your life total is {player.Life} / {player.MaxLife}\n");
                             List<int> indexList = new List<int>();
                             List<Product> potionList = new List<Product>();
-                            
-                            
+                            Dictionary<int, int> indexMap = new Dictionary<int, int>();
+                            potionList = inventory.Where(x=> x.GetType() == typeof(Potion)).ToList();
+                            int potionCount = 0;
+                            if (potionList.Count > 0)
+                            {
                                 foreach (Product p in inventory)
                                 {
                                     if (p.GetType() == typeof(Potion))
                                     {
+                                        potionCount++;
                                         inv = inventory.IndexOf(p);
                                         indexList.Add(inv);
                                         potionList.Add((Potion)p);
-                                        Console.WriteLine($"{inv})\n {p}");
+                                        indexMap.Add(potionCount, inv);
+                                        Console.WriteLine($"{potionCount})\n {p}");
                                     }
                                 }
-                            if (potionList.Count > 0) { 
+                             
                                 Console.WriteLine("Would you like to use a potion? Y/N");
                                 string answerPotion = Console.ReadLine().ToLower().Trim();
                                 switch (answerPotion)
@@ -345,9 +351,11 @@ namespace Dungeon
                                         Console.WriteLine("Which potion would you like to use?");
                                         //numbers that make sense coming soon.
                                         int chosenPotion = int.Parse(Console.ReadLine());
-                                        Potion playerPotion = (Potion)potionList[chosenPotion];
+                                        //key of indexMap is chosen potion. value is index of item in inventory
+                                        Potion playerPotion = (Potion)inventory[indexMap[chosenPotion]];
+                                        //Potion playerPotion = (Potion)potionList[chosenPotion];
                                         player.Life += playerPotion.Replenishment;
-                                        inventory.RemoveAt(chosenPotion);
+                                        inventory.RemoveAt(indexMap[chosenPotion]);
                                         break;
                                     case "no":
                                     case "n":
