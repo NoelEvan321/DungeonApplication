@@ -16,23 +16,19 @@ namespace Dungeon
 
             #endregion
 
-            #region Possible Expansion-levels
-
-            //Possible Expansion: 
-            //TODO set level to monsters killed
-            //int[] levels = { 5, 12, 20, 30, 45 };//Use with experience property in Character
-            //inherited down to Player and Monster, to scale levelling.
-
-            #endregion
-
-
             //Variable to Track Score
-
+            #region Variable Declarations
+            int inv = 0;
             int score = 0;
             int level = score;//could make some rules on this to require 3 or 4 kills to advance a level.
+            int wallet = 0;//could link cash amount to player.
+            bool isPurchased = false;
+            List<Product> inventory = new List<Product>();
+            #endregion
 
             #region Product List 
             //Product Object Creation
+
             Weapon sword = new Weapon(8, "Long Sword", 10, false, WeaponType.Sword, 1, 0, 0);
             Weapon dagger = new Weapon(10, "Short Blade", 7, false, WeaponType.Knife, 2, 35, 1);
             Weapon mace = new Weapon(15, "Mace", 8, false, WeaponType.Blunt, 10, 40, 2);
@@ -44,45 +40,49 @@ namespace Dungeon
             Potion potionNormal = new Potion("Health", "Normal Potion", "Uncommon", 20, 50, 1);
             Potion potionBig = new Potion("Health", "Big Potion", "Uncommon", 50, 150, 3);
 
-            //TODO write linq for purchase level check and to display weapons to user.
+            List<Product> items = new List<Product> { dagger, mace, maceBig, daggerBig, bow, swordBig, potionSmall, potionNormal, potionBig };
+
+
             #endregion
             #region Player object creation
             bool exit = false;
 
-            
-                //Player name
-                Console.Write("Welcome to the dungeon, adventurer - What is your name?\n");
-                string playerName = Console.ReadLine().Trim();
-                Console.WriteLine();
-                Console.Clear();
-                //Race selection
-                var dudes = Enum.GetValues<Race>().ToList();
-                Console.WriteLine($"What would you like to be {playerName}?");
-                foreach (Race dude in dudes)
-                {
-                    string display = dude.ToString().Replace('_', ' ');
-                    Console.WriteLine($"{(int)dude + 1}) {dude}");
-                }
-                int chosenRace = int.Parse(Console.ReadLine()) - 1;
 
-                Race playerRace = (Race)chosenRace;
-
-                //TODO build weapon selection menu
-                //Display a list of races and let them pick one, or assign one randomly.
-
-                Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace: playerRace, equippedWeapon: sword);
-                Console.Clear();
-                Console.WriteLine();
-            if (playerRace==Race.Hobit)
+            //Player name
+            Console.Write("Welcome to the dungeon, adventurer - What is your name?\n");
+            string playerName = Console.ReadLine().Trim();
+            Console.WriteLine();
+            Console.Clear();
+            //Race selection
+            var dudes = Enum.GetValues<Race>().ToList();
+            Console.WriteLine($"What would you like to be {playerName}?");
+            foreach (Race dude in dudes)
             {
-                Console.WriteLine("All Hobitses must be named Sam.");
+                string display = dude.ToString().Replace('_', ' ');
+                Console.WriteLine($"{(int)dude + 1}) {dude}");
+            }
+            int chosenRace = int.Parse(Console.ReadLine()) - 1;
+
+            Race playerRace = (Race)chosenRace;
+
+            Player player = new Player(name: playerName, hitChance: 70, block: 5, maxLife: 40, characterRace: playerRace, equippedWeapon: sword);
+            Console.Clear();
+            Console.WriteLine();
+            //convert hobit name to Sam
+            if (playerRace == Race.Hobbit)
+            {
+                Console.WriteLine("All Hobbitses must be named Sam.");
                 player.Name = "Sam";
             }
-                Console.WriteLine(player);
-                Console.WriteLine();
-                Console.Write("Press any key to enter the dungeon. ");
-                Console.ReadLine();
-                Console.Clear();
+            Console.WriteLine("Everybody starts with their very own sword!");
+            inventory.Add(player.EquippedWeapon);
+
+            //print player information
+            Console.WriteLine(player);
+            Console.WriteLine();
+            Console.Write("Press any key to enter the dungeon. ");
+            Console.ReadLine();
+            Console.Clear();
             #endregion
             #region Main Game Loop
 
@@ -116,11 +116,15 @@ namespace Dungeon
                         "R) Run Away\n" +
                         "P) Player Info\n" +
                         "M) Monster Info\n" +
+                        "S) Store\n" +
+                        "I) View Inventory\n" +
+                        "E) Equip Weapon\n" +
+                        "U) Use Potion\n" +
                         "X) Exit\n");
 
+
                     //Capture the user's menu selection
-                    ConsoleKey userChoice = Console.ReadKey(true).Key; //Capture the pressed key, hide the key from 
-                                                                       //the console, and execute immediately
+                    ConsoleKey userChoice = Console.ReadKey(true).Key;
 
                     //Clear the console
                     Console.Clear();
@@ -128,42 +132,56 @@ namespace Dungeon
                     //Use branching logic to act upon the user's selection
                     switch (userChoice)
                     {
+                        #region Combat
                         case ConsoleKey.A:
 
                             //Combat
-                            #region Possible Expansion - Racial/Weapon Bonus
-
-                            //Possible Expansion: Give certain character races or characters with a certain weapon an advantage
-                            //if (player.CharacterRace == Race.DarkElf)
-                            //{
-                            //    Combat.DoAttack(player, monster);
-                            //}
-                            #endregion
 
                             Combat.DoBattle(player, monster);
                             //Check if the monster is dead
                             if (monster.Life <= 0)
                             {
-
                                 //Use green to indicate winning
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                //Loot, experience, gold, whatever.
+                                #region Loot Logic
                                 Random random = new Random();
+                                int potionRandPercentage = random.Next(0, 101);
                                 int loot = 0;
+                                //int potionDropThreshold = 50; less than 50 yeilds not potion drop
                                 if (monster.Rarity == "Common")
                                 {
+                                    if (potionRandPercentage > 60 && potionRandPercentage < 90)
+                                    {
+                                        Console.WriteLine($"{monster.Name} drops {potionSmall.Name}!");
+                                        inventory.Add(potionSmall);
+                                    }
+
                                     loot = random.Next(1, 51);
+                                    wallet += loot;
                                 }
                                 else if (monster.Rarity == "Uncommon")
                                 {
+                                    if (potionRandPercentage > 90 && potionRandPercentage < 100)
+                                    {
+                                        Console.WriteLine($"{monster.Name} drops {potionNormal.Name}!");
+                                        inventory.Add(potionNormal);
+                                    }
                                     loot = random.Next(41, 101);
+                                    wallet += loot;
                                 }
                                 else
                                 {
+                                    if (potionRandPercentage > 99 && potionRandPercentage < 100)
+                                    {
+                                        Console.WriteLine($"{monster.Name} drops {potionBig.Name}!");
+                                        inventory.Add(potionBig);
+                                    }
                                     loot = random.Next(151, 251);
+                                    wallet += loot;
                                 }
+                                #endregion
                                 Console.WriteLine($"{monster.Name} drops {loot} coin");
-                                //TODO add amount of gold dropped to wallet
+
 
                                 //output the result
                                 Console.WriteLine($"\nYou killed {monster.Name}!");
@@ -176,11 +194,14 @@ namespace Dungeon
 
                                 //update the score
                                 score++;
+                                level++;
                             }
 
                             break;
 
+                        #endregion
 
+                        #region Run Away
                         case ConsoleKey.R:
 
                             //Run Away - Attack of Opportunity
@@ -194,15 +215,20 @@ namespace Dungeon
 
                             reload = true;
                             break;
+                        #endregion
 
+                        #region Player Stats
                         case ConsoleKey.P:
 
                             //Player Stats
+                            Console.WriteLine($"Your current level is {level}{(level > 0 ? "." : ". Go kill some monsters!")}");
 
                             Console.WriteLine(player);
 
                             break;
+                        #endregion
 
+                        #region Monster Stats
                         case ConsoleKey.M:
 
                             //Monster Stats
@@ -211,9 +237,142 @@ namespace Dungeon
 
                             break;
 
+                        #endregion
 
-                        case ConsoleKey.X:
+                        #region Store
+                        case ConsoleKey.S:
+
+                            Console.WriteLine($"You have {wallet} coin!\n");
+                            var storeItems = items.Where(x => x.PurchaseLevel <= score).ToList();
+                            var invItems = inventory.Where(x => x.PurchaseLevel <= score).ToList();
+                            int storeCount = 0;
+
+                            if (score > 0)
+                            {
+                                foreach (var item in storeItems)
+                                {
+                                    if (item.GetType() == typeof(Potion))
+                                    {
+                                        storeCount++;
+                                        Console.WriteLine($"\n{storeCount})\n {(Potion)item}\n");
+                                    }
+                                    else if (item.GetType() == typeof(Weapon))
+                                    {
+                                        storeCount++;
+                                        Console.WriteLine($"\n{storeCount})\n {(Weapon)item}\n");
+                                    }
+                                }
+                                Console.WriteLine("Which product would you like to purchase?");
+                                int chosenItem = int.Parse(Console.ReadLine()) - 1;
+                                if ((wallet - storeItems[chosenItem].Price) >= 0)
+                                {
+                                    wallet -= storeItems[chosenItem].Price;
+                                    inventory.Add(storeItems[chosenItem]);
+                                    Console.WriteLine($"\nYou've purchased {storeItems[chosenItem].Name} for {storeItems[chosenItem].Price} coin.");
+                                    Console.WriteLine($"\n Your wallet: {wallet}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You don't have the coin for that item!");
+                                }
+                                storeItems.Clear();
+                            }
+                            else
+                            {
+                                Console.WriteLine("You don't have any products you can purchase at this time. Go kill some monsters!");
+                            }
+                            break;
+                        #endregion
+
+                        #region Inventory
+                        case ConsoleKey.I:
+                            //Inventory
+                            foreach (Product i in inventory)
+                            {
+                                Console.WriteLine(i.Name);
+                            }
+                            break;
+
+                        #endregion
+
+                        #region Equip Weapon
+
                         case ConsoleKey.E:
+                            Console.WriteLine($"What weapon would you like to use, {playerName}?");
+                            List<Weapon> weapons = new List<Weapon>();
+                            int count = 0;
+                            foreach (Product w in inventory)
+                            {
+
+                                if (w.GetType() == typeof(Weapon))
+                                {
+                                    count++;
+                                    Console.WriteLine($"{count})\n{(Weapon)w}");
+
+                                    weapons.Add((Weapon)w);
+                                }
+                            }
+                            int chosenWeapon = int.Parse(Console.ReadLine()) - 1;
+
+                            player.EquippedWeapon = weapons[chosenWeapon];
+                            break;
+                        #endregion
+
+                        #region Use Potion
+
+                        case ConsoleKey.U:
+                            Console.WriteLine($"Your life total is {player.Life} / {player.MaxLife}\n");
+                            List<int> indexList = new List<int>();
+                            List<Product> potionList = new List<Product>();
+                            Dictionary<int, int> indexMap = new Dictionary<int, int>();
+                            potionList = inventory.Where(x => x.GetType() == typeof(Potion)).ToList();
+                            int potionCount = 0;
+                            if (potionList.Count > 0)
+                            {
+                                foreach (Product p in inventory)
+                                {
+                                    if (p.GetType() == typeof(Potion))
+                                    {
+                                        potionCount++;
+                                        inv = inventory.IndexOf(p);
+                                        indexList.Add(inv);
+                                        potionList.Add((Potion)p);
+                                        indexMap.Add(potionCount, inv);
+                                        Console.WriteLine($"{potionCount})\n {p}");
+                                    }
+                                }
+
+                                Console.WriteLine("Would you like to use a potion? Y/N");
+                                string answerPotion = Console.ReadLine().ToLower().Trim();
+                                switch (answerPotion)
+                                {
+                                    case "yes":
+                                    case "y":
+                                        Console.WriteLine("Which potion would you like to use?");
+                                        //numbers that make sense coming soon.
+                                        int chosenPotion = int.Parse(Console.ReadLine());
+                                        //key of indexMap is chosen potion. value is index of item in inventory
+                                        Potion playerPotion = (Potion)inventory[indexMap[chosenPotion]];
+                                        //Potion playerPotion = (Potion)potionList[chosenPotion];
+                                        player.Life += playerPotion.Replenishment;
+                                        inventory.RemoveAt(indexMap[chosenPotion]);
+                                        break;
+                                    case "no":
+                                    case "n":
+                                        break;
+                                        potionList.Clear();
+
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("You don't have any potions to use.");
+                            }
+                            break;
+                        #endregion
+
+                        #region Exit Loop
+                        case ConsoleKey.X:
                         case ConsoleKey.Escape:
                             //Exit
 
@@ -222,7 +381,7 @@ namespace Dungeon
                             exit = true;
 
                             break;
-
+                        #endregion
                         default:
 
                             Console.WriteLine("Thou hast chosen an improper option. Triest thou again.");
